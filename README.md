@@ -89,7 +89,7 @@ http://localhost:8080/swagger-ui/index.html
       * @GetMapping("/{id}"): `GET /api/products/{id}` - Buscar un producto específico por su ID.
       
 * **OrderController:**
-  
-     * @GetMapping: `GET /api/orders` - Consultar todas las órdenes de venta realizadas.
+
+      * GetMapping: `GET /api/orders` - Consultar todas las órdenes de venta realizadas.
  
-     * @PostMapping: `POST /api/orders` - Generar una nueva orden de venta.
+      * @PostMapping: `POST /api/orders` - Generar una nueva orden de venta.
