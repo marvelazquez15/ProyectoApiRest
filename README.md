@@ -25,7 +25,7 @@ El sistema utiliza una base de datos relacional PostgreSQL.
 ## Configuración del Entorno (application.properties)
 El archivo de configuración principal se ubica en la ruta: *`src/main/resources/application.properties`*
 
-      # Contenido de la configuración:
+Contenido de la configuración:
 spring.application.name=ApiRest
 ## Conexion a Postgres local
 spring.datasource.url=jdbc:postgresql://localhost:5432/ProyectoApiRest --PUERTO Y NOMBRE DE LA BD-- (EN CASO DE TENER OTRO PUERTO O NOMBRE -CAMBIARLO-)
