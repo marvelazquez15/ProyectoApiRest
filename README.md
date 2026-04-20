@@ -27,16 +27,17 @@ El archivo de configuración principal se ubica en la ruta: *`src/main/resources
 
       # Contenido de la configuración:
 spring.application.name=ApiRest
-# Conexion a Postgres local
+## Conexion a Postgres local
 spring.datasource.url=jdbc:postgresql://localhost:5432/ProyectoApiRest --PUERTO Y NOMBRE DE LA BD-- (EN CASO DE TENER OTRO PUERTO O NOMBRE -CAMBIARLO-)
 spring.datasource.username= --USUARIO--
 spring.datasource.password= --CONTRASEÑA--
 spring.datasource.driver-class-name=org.postgresql.Driver
-# JPA / Hibernate
+-- JPA / Hibernate
 spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 spring.jackson.mapper.sort-properties-alphabetically=false
+  
   NOTA: Es necesario sustituir --USUARIO-- y --CONTRASEÑA-- por las credenciales locales de su instancia de PostgreSQL.
 
 ## Pruebas de Request y Response (Postman)
