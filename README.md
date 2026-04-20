@@ -73,11 +73,13 @@ http://localhost:8080/swagger-ui/index.html
 
 ## Endpoints utilizados
 * **UserController:**
+  
       * @GetMapping: `GET /api/users` - Listar todos los usuarios registrados con soporte de paginación.
   
       * @PostMapping `POST /api/users` - Crear un nuevo usuario en la base de datos
 
 * **ProductController:**
+  
       * @GetMapping: `GET /api/products` - Obtener la lista de productos paginada.
 
       * @PostMapping: `POST /api/products` - Registrar un nuevo producto en el catálogo
@@ -87,6 +89,7 @@ http://localhost:8080/swagger-ui/index.html
       * @GetMapping("/{id}"): `GET /api/products/{id}` - Buscar un producto específico por su ID.
       
 * **OrderController:**
+  
      * @GetMapping: `GET /api/orders` - Consultar todas las órdenes de venta realizadas.
  
      * @PostMapping: `POST /api/orders` - Generar una nueva orden de venta.
