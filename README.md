@@ -1,6 +1,6 @@
 # Proyecto ApiRest
 
-Este proyecto consiste en el desarrollo de una API REST utilizando el framework Spring Boot para la gestión de operaciones de venta y administración de recursos.
+Este proyecto consiste en el desarrollo de una API REST utilizando el framework Spring Boot para la gestión de operaciones de venta en el que se incluyen validaciones para ciertas ejecuciones. 
 
 ## Requisitos Técnicos
 
@@ -49,8 +49,8 @@ spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 spring.jackson.mapper.sort-properties-alphabetically=false
-
-*(Nota: Es indispensable sustituir --USUARIO-- y --CONTRASEÑA-- por las credenciales locales de su instancia de PostgreSQL para establecer la conexión correctamente.)*
+```
+*(Nota: Es indispensable sustituir --USUARIO-- y --CONTRASEÑA-- por las credenciales locales de su instancia de PostgreSQL para establecer la conexión correctamente.)* 
 
 ## Pruebas de Request y Response (Postman)
 La documentación de las pruebas funcionales, incluyendo los cuerpos de solicitud (JSON) y las respuestas esperadas, se encuentra en el directorio /postman.
@@ -64,9 +64,29 @@ Una vez que la aplicación esté corriendo localmente, se puede acceder a la int
 
 http://localhost:8080/swagger-ui/index.html
 
-Estructura del Proyecto
-/src: Contiene el código fuente organizado por capas (Entities, Repository, Services, Controller, etc.).
+## Estructura del Proyecto
+* **/src:** Contiene el código fuente organizado por capas (Entities, Repository, Services, Controller, etc.).
 
-/database: Contiene los scripts SQL necesarios para la inicialización del sistema (Tablas y Registros).
+* **/database:** Contiene los scripts SQL necesarios para la inicialización del sistema (Tablas y Registros).
 
-/postman: Contiene la colección de peticiones para validación externa (Pruebas).
+* **/postman:** Contiene la colección de peticiones para validación externa (Pruebas).
+
+## Endpoints utilizados
+* **UserController:**
+      * @GetMapping: `GET /api/users` - Listar todos los usuarios registrados con soporte de paginación.
+  
+      * @PostMapping `POST /api/users` - Crear un nuevo usuario en la base de datos
+
+* **ProductController:**
+      * @GetMapping: `GET /api/products` - Obtener la lista de productos paginada.
+
+      * @PostMapping: `POST /api/products` - Registrar un nuevo producto en el catálogo
+
+      * @PutMapping("/{id}"): `PUT /api/products/{id}` - Actualizar los datos de un producto existente.
+
+      * @GetMapping("/{id}"): `GET /api/products/{id}` - Buscar un producto específico por su ID.
+      
+* **OrderController:**
+     * @GetMapping: `GET /api/orders` - Consultar todas las órdenes de venta realizadas.
+ 
+     * @PostMapping: `POST /api/orders` - Generar una nueva orden de venta.
