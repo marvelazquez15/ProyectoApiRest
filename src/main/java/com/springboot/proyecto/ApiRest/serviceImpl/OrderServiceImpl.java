@@ -53,21 +53,22 @@ public class OrderServiceImpl implements OrderService {
             throw new ServiceException("No se puede crear una orden sin productos.");
         }
 
-        //validar usuario (usando fi_user_id del DTO)
+        //validar usuario
         UserEntities usuario = userRepository.findById(Long.valueOf(orderDto.getFi_user_id()))
                 .orElseThrow(() -> new ServiceException("Usuario no encontrado con id: " + orderDto.getFi_user_id()));
 
+        //nueva orden y le asigna los datos básicos.
         OrderEntities nuevaOrden = new OrderEntities();
         nuevaOrden.setUser(usuario);
         nuevaOrden.setFt_fecha(LocalDateTime.now());
-        nuevaOrden.setFv_metodopago(orderDto.getFv_metodopago()); // Nombre actualizado
+        nuevaOrden.setFv_metodopago(orderDto.getFv_metodopago()); 
         
         List<OrderDetailEntities> listaDetalles = new ArrayList<>();
         BigDecimal subtotal = BigDecimal.ZERO;
 
         //procesar productos
         for (OrderDetailDto itemDto : orderDto.getProductos()) {
-            
+            //precio real y el stock actual
             ProductEntities product = productRepository.findById(Long.valueOf(itemDto.getFi_product_id()))
                     .orElseThrow(() -> new ServiceException("Producto no encontrado id: " + itemDto.getFi_product_id()));
 
@@ -80,7 +81,7 @@ public class OrderServiceImpl implements OrderService {
             product.setFi_stock(product.getFi_stock() - itemDto.getFi_cantidad());
             productRepository.save(product);
 
-            //cálculos 
+            //cálculos p*c
             BigDecimal costoDetalle = product.getFn_precio().multiply(new BigDecimal(itemDto.getFi_cantidad()));
             subtotal = subtotal.add(costoDetalle);
             
@@ -91,7 +92,7 @@ public class OrderServiceImpl implements OrderService {
             
             listaDetalles.add(detalleEntidad);
         }
-
+        //iva 16%
         BigDecimal tasaIva = new BigDecimal("0.16");
         BigDecimal iva = subtotal.multiply(tasaIva);
 

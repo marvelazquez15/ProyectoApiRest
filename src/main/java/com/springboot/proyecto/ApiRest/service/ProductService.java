@@ -2,6 +2,7 @@ package com.springboot.proyecto.ApiRest.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.springboot.proyecto.ApiRest.dto.ProductDto;
 import com.springboot.proyecto.ApiRest.entities.ProductEntities;
@@ -12,4 +13,5 @@ public interface ProductService {
     ProductEntities save(ProductEntities product);
     ProductEntities saveFromDto(ProductDto dto);
     ProductEntities updateFromDto(Long id, ProductDto dto);
+    void importProductsFromExcel(MultipartFile file); //accion para procesar el excel 
 }

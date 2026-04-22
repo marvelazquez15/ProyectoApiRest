@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.springboot.proyecto.ApiRest.dto.ProductDto;
 import com.springboot.proyecto.ApiRest.entities.ProductEntities;
+import com.springboot.proyecto.ApiRest.exceptions.ServiceException;
 import com.springboot.proyecto.ApiRest.service.ProductService;
 
 import jakarta.validation.Valid;
@@ -100,5 +102,24 @@ public class ProductController {
         dto.setFn_precio(p.getFn_precio());
         dto.setFi_stock(p.getFi_stock());
         return ResponseEntity.ok(dto);
+    }
+    @PostMapping("/import") 
+    public ResponseEntity<String> importExcel(@RequestParam("file") MultipartFile file) {
+        try {
+            //se cargo el archivo
+            if (file.isEmpty()) {
+                return ResponseEntity.badRequest().body("Subir un archivo .xlsx");
+            }
+            //lógica del servicio.
+            productService.importProductsFromExcel(file);
+            //se cargo correctamente 
+            return ResponseEntity.ok("Productos cargados en la BD");
+        } catch (ServiceException e) {
+            //si lanzó un error devolvemos error 
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            //devolvemos error 500.
+            return ResponseEntity.internalServerError().body("Error inesperado: " + e.getMessage());
+        }
     }
 }

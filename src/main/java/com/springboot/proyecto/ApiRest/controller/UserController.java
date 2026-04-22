@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,34 +36,32 @@ public class UserController {
         Pageable pageable = PageRequest.of(page, size);
         Page<UserEntities> users = userService.findAll(pageable);
         
-        //mapeo de Entity a DTO
-        Page<UserDto> dtos = users.map(user -> {
-            UserDto dto = new UserDto();
-            dto.setFs_id(user.getFs_id());
-            dto.setFv_nombre(user.getFv_nombre());
-            dto.setFv_apellido_paterno(user.getFv_apellido_paterno());
-            dto.setFv_apellido_materno(user.getFv_apellido_materno());
-            dto.setFv_email(user.getFv_email());
-            dto.setFn_telefono(user.getFn_telefono());
-            return dto;
-        });
-        
-        return ResponseEntity.ok(dtos);
+        return ResponseEntity.ok(users.map(this::convertToDto));
+    }
+
+    @GetMapping("/{id}")
+    // Endpoint: GET /api/users/{id} - Buscar un usuario específico por su ID.
+    public ResponseEntity<UserDto> getById(@PathVariable Long id) {
+        UserEntities user = userService.findById(id);
+        return ResponseEntity.ok(convertToDto(user));
     }
 
     @PostMapping
     // Endpoint: POST /api/users - Crear un nuevo usuario en la base de datos.
     public ResponseEntity<UserDto> create(@Valid @RequestBody UserDto userDto) {
         UserEntities guardado = userService.saveFromDto(userDto);
-        
-        UserDto respuesta = new UserDto();
-        respuesta.setFs_id(guardado.getFs_id());
-        respuesta.setFv_nombre(guardado.getFv_nombre());
-        respuesta.setFv_apellido_paterno(guardado.getFv_apellido_paterno());
-        respuesta.setFv_apellido_materno(guardado.getFv_apellido_materno());
-        respuesta.setFv_email(guardado.getFv_email());
-        respuesta.setFn_telefono(guardado.getFn_telefono());
-        
-        return new ResponseEntity<>(respuesta, HttpStatus.CREATED);
+        return new ResponseEntity<>(convertToDto(guardado), HttpStatus.CREATED);
+    }
+
+    //método de apoyo para mapeo de Entity a DTO
+    private UserDto convertToDto(UserEntities user) {
+        UserDto dto = new UserDto();
+        dto.setFs_id(user.getFs_id());
+        dto.setFv_nombre(user.getFv_nombre());
+        dto.setFv_apellido_paterno(user.getFv_apellido_paterno());
+        dto.setFv_apellido_materno(user.getFv_apellido_materno());
+        dto.setFv_email(user.getFv_email());
+        dto.setFn_telefono(user.getFn_telefono());
+        return dto;
     }
 }
