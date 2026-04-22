@@ -44,3 +44,7 @@ INSERT INTO TO003_Order (fi_user_id, fn_subtotal, fn_iva, fn_total, fv_metodopag
 INSERT INTO TO004_OrderDetail (fi_order_id, fi_product_id, fi_cantidad) VALUES
 (1, 1, 1), (2, 2, 1), (3, 3, 1), (4, 4, 1), (5, 5, 1),
 (6, 6, 1), (7, 7, 1), (8, 8, 1), (9, 9, 1), (10, 10, 1);
+
+select * from to002_product; --ver los registro de la tabla productos
+delete from to002_product where fs_id > 10; --eliminar los registros que se subieron de excel
+alter sequence to002_product_fs_id_seq restart with 11; --restaurar el id desde el id 11
